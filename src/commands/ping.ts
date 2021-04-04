@@ -21,6 +21,10 @@ export default createCommand(
 
     const m = await msg.reply(embed)
 
-    m.edit(embed.setDescription(colorBlue(`🌐 ${m.createdTimestamp - msg.createdTimestamp}ms`)))
+    m.edit(
+      embed.setDescription(
+        colorBlue(`🌐 ${m.createdTimestamp - msg.createdTimestamp}ms`)
+      )
+    )
   }
 )

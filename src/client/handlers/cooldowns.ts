@@ -20,8 +20,7 @@ export class CooldownsManager {
 
     if (diff > 0) {
       return Math.floor(diff / 100) / 10
-    }
-    else {
+    } else {
       this.remCooldown(name, id)
     }
   }

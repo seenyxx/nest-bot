@@ -6,8 +6,8 @@ import {
 } from '../renderers/errors/permission'
 import { GuildOnlyError } from '../renderers/errors/guildOnly'
 import { MissingArgumentsError } from '../renderers/errors/missingArgs'
-import { StandardError } from '../renderers/errors/std';
-import { CooldownError } from '../renderers/errors/cooldown';
+import { StandardError } from '../renderers/errors/std'
+import { CooldownError } from '../renderers/errors/cooldown'
 
 export default onEvent('message', async msg => {
   if (msg.author.bot) return
@@ -54,12 +54,19 @@ export default onEvent('message', async msg => {
     )
   }
 
-  const remaining = botCache.cooldowns.checkCooldown(cmd.opts.triggers[0], msg.author.id)
+  const remaining = botCache.cooldowns.checkCooldown(
+    cmd.opts.triggers[0],
+    msg.author.id
+  )
 
   if (remaining) {
     return msg.reply(new CooldownError(remaining))
   }
 
   await cmd.exec(msg, args).catch(e => msg.reply(new StandardError(e)))
-  botCache.cooldowns.setCooldown(cmd.opts.triggers[0], msg.author.id, cmd.opts.cooldown)
+  botCache.cooldowns.setCooldown(
+    cmd.opts.triggers[0],
+    msg.author.id,
+    cmd.opts.cooldown
+  )
 })
