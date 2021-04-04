@@ -1,8 +1,8 @@
 import { Message, MessageEmbed } from 'discord.js'
 
-import { createCommand } from '../client/handlers/command'
-import { colorBlue, colorGreen } from '../renderers/format/colors'
-import { PERMISSION_LEVELS, THEME_COLORS } from '../util/constants'
+import { createCommand } from '../../client/handlers/command'
+import { colorBlue, colorGreen } from '../../renderers/format/colors'
+import { PERMISSION_LEVELS, THEME_COLORS } from '../../util/constants'
 
 export default createCommand(
   {
