@@ -1,8 +1,8 @@
 import { readdir } from 'fs/promises'
 import { Command } from './handlers/command'
 import { botCache } from '../util/cache'
-import { BotClient } from './client';
-import { CustomBotEvent } from './handlers/event';
+import { BotClient } from './client'
+import { CustomBotEvent } from './handlers/event'
 
 const rootPath = `${__dirname}/..`
 
@@ -21,7 +21,9 @@ export async function loadCommands(path?: string) {
       if (module) {
         module.opts.triggers.forEach(trigger => {
           if (!botCache.commands.get(trigger)) {
-            console.log(`[CMD] -> Loading trigger: ${trigger} for command: ${module.opts.triggers[0]}`)
+            console.log(
+              `[CMD] -> Loading trigger: ${trigger} for command: ${module.opts.triggers[0]}`
+            )
             botCache.commands.set(trigger, module)
           }
         })

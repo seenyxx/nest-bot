@@ -11,6 +11,6 @@ export function onEvent<K extends keyof ClientEvents>(
 }
 
 export interface CustomBotEvent<K extends keyof ClientEvents> {
-  on: string,
+  on: string
   exec: (...args: ClientEvents[K]) => void
 }

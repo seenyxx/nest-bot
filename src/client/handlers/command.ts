@@ -13,16 +13,14 @@ export interface CommandOpts {
   desc: string
   usage: string
   cooldown: number
+  argsCount?: number
+  missingArgs?: string
   category: 'leveling' | 'moderation' | 'misc'
   requiredPermissions: PermissionResolvable[]
   guildOnly?: boolean
 }
 
-export type CommandFunction = (
-  client: BotClient,
-  msg: Message,
-  args: string[]
-) => Promise<any>
+export type CommandFunction = (msg: Message, args: string[]) => Promise<any>
 
 export interface Command {
   opts: CommandOpts

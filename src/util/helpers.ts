@@ -14,3 +14,7 @@ export interface Configuration {
   prefix: string
   database: string
 }
+
+export function joinArray(a: any[], sep?: string, ends?: string) {
+  return `${ends}${a.join(sep || ' ')}${ends}`
+}

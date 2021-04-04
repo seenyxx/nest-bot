@@ -1,6 +1,6 @@
 import { Client } from 'discord.js'
 import { botCache } from '../util/cache'
-import { loadCommands, loadEvents } from './loaders';
+import { loadCommands, loadEvents } from './loaders'
 
 export class BotClient extends Client {
   constructor() {
