@@ -11,7 +11,7 @@ export function createCommand(opts: CommandOpts, func: CommandFunction): Command
 export interface CommandOpts {
   triggers: string[]
   desc: string
-  usage: string
+  usage?: string
   cooldown: number
   argsCount?: number
   missingArgs?: string
