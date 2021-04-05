@@ -17,7 +17,7 @@ export interface Configuration {
 }
 
 export function joinArray(a: any[], sep?: string, ends?: string) {
-  return `${ends}${a.join(sep || ' ')}${ends}`
+  return `${ends || ''}${a.join(sep || ' ')}${ends || ''}`
 }
 
 export function formatPermissions(a: PermissionResolvable[]) {
@@ -30,4 +30,8 @@ export function eachWordUppercase(phrase: string) {
     .split(' ')
     .map(word => word.charAt(0).toUpperCase() + word.slice(1))
     .join(' ')
+}
+
+export function shortenNumber(number: number) {
+  return number > 1000 ? `${Math.floor(number / 100) / 10}k` : number
 }

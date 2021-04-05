@@ -3,6 +3,7 @@ import { THEME_COLORS, DEFAULT_SEPARATOR } from '../../util/constants'
 import { botCache } from '../../util/cache'
 import { joinArray, formatPermissions } from '../../util/helpers'
 import { codeBlock } from '../format/other'
+import { colorCyan } from '../format/colors'
 
 export class CommandHelpMenu extends MessageEmbed {
   constructor(cmd: string) {
@@ -38,13 +39,11 @@ export class CommandHelpMenu extends MessageEmbed {
     )
     this.addField(
       'Required Permissions',
-      codeBlock(
+      colorCyan(
         joinArray(
           formatPermissions(command.opts.requiredPermissions),
-          ` ${DEFAULT_SEPARATOR} `,
-          '`'
-        ),
-        'js'
+          ` ${DEFAULT_SEPARATOR} `
+        )
       )
     )
   }

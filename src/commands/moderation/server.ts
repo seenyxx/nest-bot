@@ -10,7 +10,7 @@ export default createCommand(
     cooldown: 8,
     desc: "Tells you the server's information",
     requiredPermissions: PERMISSION_LEVELS.user,
-    guildOnly: true
+    guildOnly: true,
   },
   async (msg: Message, args: string[]) => {
     if (!msg.guild) return

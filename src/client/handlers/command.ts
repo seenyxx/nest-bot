@@ -18,6 +18,7 @@ export interface CommandOpts {
   category: HelpCategories
   requiredPermissions: PermissionResolvable[]
   guildOnly?: boolean
+  typing?: boolean
 }
 
 export type CommandFunction = (msg: Message, args: string[]) => Promise<any>

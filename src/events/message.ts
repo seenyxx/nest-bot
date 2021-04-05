@@ -8,9 +8,16 @@ import { GuildOnlyError } from '../renderers/errors/guildOnly'
 import { MissingArgumentsError } from '../renderers/errors/missingArgs'
 import { StandardError } from '../renderers/errors/std'
 import { CooldownError } from '../renderers/errors/cooldown'
+import { LevelManager } from '../database/levels'
 
 export default onEvent('message', async msg => {
   if (msg.author.bot) return
+
+  if (msg.guild && msg.member) {
+    const user = new LevelManager(msg.member)
+
+    user.updateXp(msg)
+  }
 
   const args = msg.content
     .substr(botCache.config.prefix.length, msg.content.length)
@@ -62,11 +69,17 @@ export default onEvent('message', async msg => {
   if (remaining) {
     return msg.reply(new CooldownError(remaining))
   }
-
+  if (cmd.opts.typing) {
+    msg.channel.startTyping()
+  }
   await cmd.exec(msg, args).catch(e => msg.reply(new StandardError(e)))
   botCache.cooldowns.setCooldown(
     cmd.opts.triggers[0],
     msg.author.id,
     cmd.opts.cooldown
   )
+
+  if (cmd.opts.typing) {
+    msg.channel.stopTyping()
+  }
 })
