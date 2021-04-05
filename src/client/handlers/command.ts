@@ -15,12 +15,13 @@ export interface CommandOpts {
   cooldown: number
   argsCount?: number
   missingArgs?: string
-  category: 'leveling' | 'moderation' | 'misc'
+  category: HelpCategories
   requiredPermissions: PermissionResolvable[]
   guildOnly?: boolean
 }
 
 export type CommandFunction = (msg: Message, args: string[]) => Promise<any>
+export type HelpCategories = 'leveling' | 'moderation' | 'misc'
 
 export interface Command {
   opts: CommandOpts

@@ -10,7 +10,7 @@ export default createCommand(
     category: 'misc',
     cooldown: 3,
     desc: "Tells you the bot's ping!",
-    requiredPermissions: PERMISSION_LEVELS.user
+    requiredPermissions: PERMISSION_LEVELS.user,
   },
   async (msg: Message, args: string[]) => {
     const embed = new MessageEmbed()

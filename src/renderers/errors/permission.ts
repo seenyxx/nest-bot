@@ -1,6 +1,6 @@
 import { MessageEmbed, PermissionResolvable } from 'discord.js'
 import { THEME_COLORS } from '../../util/constants'
-import { joinArray } from '../../util/helpers'
+import { joinArray, formatPermissions } from '../../util/helpers'
 
 export class PermissionError extends MessageEmbed {
   constructor(permissions: PermissionResolvable[]) {
@@ -10,7 +10,7 @@ export class PermissionError extends MessageEmbed {
     this.addField(
       'Info',
       `You seem to be missing one or more of these permissions:\n${joinArray(
-        permissions,
+        formatPermissions(permissions),
         '` `',
         '`'
       )}`
@@ -25,7 +25,7 @@ export class ClientPermissionError extends PermissionError {
     this.addField(
       'Info',
       `I seem to be missing one or more of the following permissions:\n${joinArray(
-        permissions,
+        formatPermissions(permissions),
         '` `',
         '`'
       )}`

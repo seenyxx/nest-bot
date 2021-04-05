@@ -48,7 +48,7 @@ export default onEvent('message', async msg => {
     }
   }
 
-  if (cmd.opts.argsCount && cmd.opts.argsCount < args.length) {
+  if (cmd.opts.argsCount && cmd.opts.argsCount > args.length) {
     return msg.reply(
       new MissingArgumentsError(cmd.opts.missingArgs, cmd.opts.argsCount)
     )

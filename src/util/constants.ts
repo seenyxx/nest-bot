@@ -31,3 +31,7 @@ export const THEME_COLORS: Record<ThemeColors, ColorResolvable> = {
 }
 
 export type ThemeColors = 'error' | 'success' | 'info' | 'log' | 'warn'
+export const DEFAULT_SEPARATOR = '•'
+export const ID_REGEX = /[0-9]+/g
+export const USERNAME_TAG_REGEX = /^.+#[0-9]{4}$/g
+export const DEFAULT_SERVER_LOGO = 'https://discord.com/assets/2c21aeda16de354ba5334551a883b481.png'
