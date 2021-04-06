@@ -53,6 +53,5 @@ export const PROGRESS_HEIGHT = 80 * RANK_SIZE_MULTI
 export const RANK_FONT = 'Ubuntu Mono, monospace'
 export const RANK_TEXT_COLOR = '#FFFFFF'
 
-
 export const NUMBER_REGEX = /[0-9]+/g
 export const HEX_COLOR_REGEX = /^(#[a-f0-9]{6})$/

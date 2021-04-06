@@ -101,9 +101,11 @@ export class RankCard extends Canvas {
 
     const fSize = (user.user.username.length > 15 ? 140 : 130) * RANK_SIZE_MULTI
     ctx.fillStyle = RANK_TEXT_COLOR
-    
+
     ctx.font =
-      user.user.username.length > 15 ? `${fSize}px ${RANK_FONT}` : `${fSize}px ${RANK_FONT}`
+      user.user.username.length > 15
+        ? `${fSize}px ${RANK_FONT}`
+        : `${fSize}px ${RANK_FONT}`
 
     const usernameSize = ctx.measureText(user.user.username)
     ctx.fillText(user.user.username, txtPosX, txtPosY)

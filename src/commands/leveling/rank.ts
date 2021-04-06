@@ -12,7 +12,7 @@ export default createCommand(
     cooldown: 8,
     requiredPermissions: PERMISSION_LEVELS.user,
     guildOnly: true,
-    typing: true
+    typing: true,
   },
   async (msg: Message, args: string[]) => {
     if (!msg.member || !msg.guild) return

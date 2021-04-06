@@ -1,13 +1,13 @@
 export function colorGreen(txt: string) {
-  return `\`\`\`diff\n+ ${txt} \n\`\`\``
+  return `\`\`\`diff\n+ ${txt.split('\n').join('\n+ ')} \n\`\`\``
 }
 
 export function colorRed(txt: string) {
-  return `\`\`\`diff\n- ${txt} \n\`\`\``
+  return `\`\`\`diff\n- ${txt.split('\n').join('\n- ')} \n\`\`\``
 }
 
 export function colorBlue(txt: string) {
-  return txt.split('\n').join('\n# ')
+  return `\`\`\`md\n# ${txt.split('\n').join('\n# ')}\n\`\`\``
 }
 
 export function colorCyan(txt: string) {
