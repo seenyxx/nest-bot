@@ -35,3 +35,7 @@ export function eachWordUppercase(phrase: string) {
 export function shortenNumber(number: number) {
   return number > 1000 ? `${Math.floor(number / 100) / 10}k` : number
 }
+
+export function duplicateObject<V>(o: V): V {
+  return JSON.parse(JSON.stringify(o))
+}

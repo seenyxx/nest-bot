@@ -1,9 +1,27 @@
 import { Message, PermissionResolvable } from 'discord.js'
-import { BotClient } from '../client'
+import { duplicateObject } from '../../util/helpers'
 
 export function createCommand(opts: CommandOpts, func: CommandFunction): Command {
   return {
     opts: opts,
+    exec: func,
+  }
+}
+
+export function createSubCommand(opts: SubCommandOpts, func: CommandFunction): Command {
+  let modOpts = duplicateObject(opts)
+
+  modOpts.triggers = []
+  opts.parents.forEach(p => {
+    modOpts.triggers = modOpts.triggers.concat(opts.triggers.filter(t => t !== '_default').map(t => `${p} ${t}`))
+  })
+
+  if (opts.triggers.includes('_default')) {
+    modOpts.triggers = modOpts.triggers.concat(opts.parents)
+  }
+
+  return {
+    opts: modOpts,
     exec: func,
   }
 }
@@ -19,6 +37,10 @@ export interface CommandOpts {
   requiredPermissions: PermissionResolvable[]
   guildOnly?: boolean
   typing?: boolean
+}
+
+export interface SubCommandOpts extends CommandOpts {
+  parents: string[]
 }
 
 export type CommandFunction = (msg: Message, args: string[]) => Promise<any>

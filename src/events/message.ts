@@ -9,6 +9,7 @@ import { MissingArgumentsError } from '../renderers/errors/missingArgs'
 import { StandardError } from '../renderers/errors/std'
 import { CooldownError } from '../renderers/errors/cooldown'
 import { LevelManager } from '../database/levels'
+import { Message } from 'discord.js';
 
 export default onEvent('message', async msg => {
   if (msg.author.bot) return
@@ -19,13 +20,30 @@ export default onEvent('message', async msg => {
     user.updateXp(msg)
   }
 
+  parseCommand(msg)
+})
+
+
+async function parseCommand(msg: Message, sc?: boolean) {
   const args = msg.content
     .substr(botCache.config.prefix.length, msg.content.length)
     .split(/ +/g)
 
-  const command = args.shift()
+  let command = args.shift()
+  let sub = args[0]
 
-  if (!command) return
+  if (!command) {
+    parseCommand(msg, true)
+    return
+  }
+
+  if (sc && !sub) {
+    return
+  } else if (sc && sub) {
+    command = command.concat(` ${sub}`)
+    args.shift()
+  }
+
 
   const cmd = botCache.commands.get(command)
 
@@ -82,4 +100,4 @@ export default onEvent('message', async msg => {
   if (cmd.opts.typing) {
     msg.channel.stopTyping()
   }
-})
+}
