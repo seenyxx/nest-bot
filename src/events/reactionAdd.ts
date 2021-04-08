@@ -1,11 +1,18 @@
-import { GuildMember, MessageReaction, PartialUser, User, TextChannel, NewsChannel } from 'discord.js'
+import {
+  GuildMember,
+  MessageReaction,
+  PartialUser,
+  User,
+  TextChannel,
+  NewsChannel,
+} from 'discord.js'
 
 import { onEvent } from '../client/handlers/event'
 import { getReactionRole, removeReactionRole } from '../database/reactionRoles'
 import { STAR_BOARD_REACTION, STAR_BOARD_MIN } from '../util/constants'
-import { getStarboardChannel } from '../util/helpers';
+import { getStarboardChannel } from '../util/helpers'
 import { StarboardMessage } from '../renderers/starboard/message'
-import { getStarboardMessage, setStarboardMessage } from '../database/starboard';
+import { getStarboardMessage, setStarboardMessage } from '../database/starboard'
 
 export default onEvent('messageReactionAdd', async (reaction, user) => {
   if (reaction.partial) await reaction.fetch()
@@ -20,8 +27,10 @@ export default onEvent('messageReactionAdd', async (reaction, user) => {
   }
 })
 
-
-async function parseReactionRole(reaction: MessageReaction, user: User | PartialUser) {
+async function parseReactionRole(
+  reaction: MessageReaction,
+  user: User | PartialUser
+) {
   if (!reaction.message.guild) return
 
   const msg = reaction.message
@@ -47,7 +56,12 @@ async function parseReactionRole(reaction: MessageReaction, user: User | Partial
 }
 
 async function parseStarboard(reaction: MessageReaction, user: User | PartialUser) {
-  if (reaction.emoji.name !== STAR_BOARD_REACTION || !reaction.message.guild || reaction.message.author.bot) return
+  if (
+    reaction.emoji.name !== STAR_BOARD_REACTION ||
+    !reaction.message.guild ||
+    reaction.message.author.bot
+  )
+    return
 
   const guild = reaction.message.guild
   const starboard = await getStarboardChannel(reaction.message.guild)
@@ -55,26 +69,28 @@ async function parseStarboard(reaction: MessageReaction, user: User | PartialUse
   const count = reaction.count
 
   if (!count || count < STAR_BOARD_MIN) return
-  
+
   if (starboard) {
     const starboardMsg = await getStarboardMessage(guild.id, msg.id)
-    
+
     if (!starboardMsg) {
       await sendStarboardMessage(starboard, count)
       return
     }
-    
+
     const fetchedMsg = await starboard.messages.fetch(starboardMsg).catch(no => {})
 
     if (fetchedMsg) {
       fetchedMsg.edit(new StarboardMessage(msg, count))
-    }
-    else {
+    } else {
       await sendStarboardMessage(starboard, count)
     }
   }
 
-  async function sendStarboardMessage(starboard: TextChannel | NewsChannel, count: number) {
+  async function sendStarboardMessage(
+    starboard: TextChannel | NewsChannel,
+    count: number
+  ) {
     const m = await starboard.send(new StarboardMessage(msg, count))
     setStarboardMessage(guild.id, msg.id, m.id)
   }

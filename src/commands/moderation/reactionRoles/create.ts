@@ -1,7 +1,11 @@
 import { Guild, Message, MessageEmbed } from 'discord.js'
 
 import { createSubCommand } from '../../../client/handlers/command'
-import { addReactionRole, checkRRCount, ReactionRole } from '../../../database/reactionRoles'
+import {
+  addReactionRole,
+  checkRRCount,
+  ReactionRole,
+} from '../../../database/reactionRoles'
 import { codeBlock } from '../../../renderers/format/other'
 import {
   PERMISSION_LEVELS,
@@ -27,7 +31,8 @@ export default createSubCommand(
   async (msg: Message, args: string[]) => {
     if (!msg.guild) return
 
-    if (await checkRRCount(msg.guild.id)) throw new Error('You have reached the maximum amount of reaction roles.')
+    if (await checkRRCount(msg.guild.id))
+      throw new Error('You have reached the maximum amount of reaction roles.')
 
     msg.channel.send('Creating reaction role..')
     msg.channel.send('Which channel would you like to have your reaction role in?')
@@ -123,7 +128,7 @@ export default createSubCommand(
         m.channel.send('You have reached the maximum amount of reaction roles.')
         rrCollector.stop()
       }
-      
+
       if (!emoji?.match(EMOJI_REGEX) || !role) {
         m.channel.send(
           'You did not provide a valid role or a valid emoji (The emoji must not be a custom emoji!).'

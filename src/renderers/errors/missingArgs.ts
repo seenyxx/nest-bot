@@ -1,5 +1,6 @@
 import { MessageEmbed } from 'discord.js'
 import { THEME_COLORS } from '../../util/constants'
+import { codeBlock } from '../format/other'
 
 export class MissingArgumentsError extends MessageEmbed {
   constructor(msg?: string, argsCount?: number) {

@@ -36,7 +36,7 @@ export async function getReactionRole(
 
 export async function deleteReactionRoleMessage(guildId: string, msgId: string) {
   const verify = await ReactionRoleDb.get(`rr_${guildId}_${msgId}`)
-  
+
   if (verify) {
     await ReactionRoleDb.delete(`rr_${guildId}_${msgId}`)
   }

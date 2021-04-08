@@ -1,9 +1,9 @@
-import { onEvent } from '../client/handlers/event';
-import { getStarboardMessage } from '../database/starboard';
-import { getStarboardChannel } from '../util/helpers';
+import { onEvent } from '../client/handlers/event'
+import { getStarboardMessage } from '../database/starboard'
+import { getStarboardChannel } from '../util/helpers'
 import { StarboardMessage } from '../renderers/starboard/message'
 import { STAR_BOARD_MIN, STAR_BOARD_REACTION } from '../util/constants'
-import { Message } from 'discord.js';
+import { Message } from 'discord.js'
 
 export default onEvent('messageUpdate', async (oldMsg, newMsg) => {
   if (newMsg.partial) await newMsg.fetch()
@@ -18,20 +18,23 @@ export default onEvent('messageUpdate', async (oldMsg, newMsg) => {
 
   if (starboard) {
     const starboardMsg = await getStarboardMessage(newMsg.guild.id, newMsg.id)
-    
+
     if (!starboardMsg) return
-    
+
     const msg = await starboard.messages.fetch(starboardMsg).catch(no => {})
 
     if (!msg) {
-      const count = newMsg.reactions.cache.find(r => r.emoji.name === STAR_BOARD_REACTION)?.count
+      const count = newMsg.reactions.cache.find(
+        r => r.emoji.name === STAR_BOARD_REACTION
+      )?.count
 
       if (!count || count < STAR_BOARD_MIN) return
 
       starboard.send(new StarboardMessage(newMsg as Message, count))
-    }
-    else {
-      const count = newMsg.reactions.cache.find(r => r.emoji.name === STAR_BOARD_REACTION)?.count
+    } else {
+      const count = newMsg.reactions.cache.find(
+        r => r.emoji.name === STAR_BOARD_REACTION
+      )?.count
 
       if (!count || count < STAR_BOARD_MIN) return
 

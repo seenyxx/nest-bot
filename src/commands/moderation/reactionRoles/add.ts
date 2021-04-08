@@ -25,7 +25,8 @@ export default createSubCommand(
   async (msg: Message, args: string[]) => {
     if (!msg.guild) return
 
-    if (await checkRRCount(msg.guild.id)) throw new Error('You have reached the maximum amount of reaction roles.')
+    if (await checkRRCount(msg.guild.id))
+      throw new Error('You have reached the maximum amount of reaction roles.')
     const msgId = args.shift() as string
     const reactionRole = args.join(' ').split(',')
 
@@ -35,7 +36,8 @@ export default createSubCommand(
 
     const roles = msg.mentions.roles.map(r => r)
 
-    if (await checkRRCount(msg.guild.id, reactionRole.length)) throw new Error('You cannot add that many reaction roles.')
+    if (await checkRRCount(msg.guild.id, reactionRole.length))
+      throw new Error('You cannot add that many reaction roles.')
 
     for (let i = 0; i < reactionRole.length; i++) {
       const rrParsed = reactionRole[i].split(':')

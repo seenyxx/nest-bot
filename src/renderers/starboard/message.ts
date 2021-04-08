@@ -1,5 +1,7 @@
-import { Message, MessageEmbed, User } from 'discord.js'
-import { STAR_BOARD_COLORS, STAR_BOARD_INTERVALS } from '../../util/constants'
+import Color from 'color'
+import { Message, MessageEmbed } from 'discord.js'
+
+import { STAR_BOARD_INTERVALS, STAR_BOARD_COLOR, STAR_BOARD_COLOR_MULTI } from '../../util/constants'
 
 export class StarboardMessage extends MessageEmbed {
   constructor(msg: Message, starCount: number) {
@@ -7,33 +9,24 @@ export class StarboardMessage extends MessageEmbed {
     this.setColor(computeColor(starCount))
     this.setAuthor(msg.author.tag, msg.author.displayAvatarURL(), msg.url)
     this.setDescription(msg.content)
-    this.setFooter(`⭐ ${starCount}`)
+    this.addField('\u200B', `[\`[View Message]\`](${msg.url})`)
+    this.setFooter(`${computeEmoji(starCount)} ${starCount} | ${msg.editedTimestamp ? '(edited)' : ''}`)
   }
 }
-
 
 export function computeColor(starCount: number) {
-  if (starCount < STAR_BOARD_INTERVALS[0]) {
-    return STAR_BOARD_COLORS[0]
+  return new Color(STAR_BOARD_COLOR).rotate(Math.round(starCount * STAR_BOARD_COLOR_MULTI)).hex()
+}
+
+export function computeEmoji(starCount: number) {
+  if (starCount < STAR_BOARD_INTERVALS[3]) {
+    return '⭐'
   }
-  else if (starCount < STAR_BOARD_INTERVALS[1] && starCount > STAR_BOARD_INTERVALS[0]) {
-    return STAR_BOARD_COLORS[1]
-  }
-  else if (starCount < STAR_BOARD_INTERVALS[2] && starCount > STAR_BOARD_INTERVALS[1]) {
-    return STAR_BOARD_COLORS[2]
-  }
-  else if (starCount < STAR_BOARD_INTERVALS[3] && starCount > STAR_BOARD_INTERVALS[2]) {
-    return STAR_BOARD_COLORS[3]
-  }
-  else if (starCount < STAR_BOARD_INTERVALS[4] && starCount > STAR_BOARD_INTERVALS[3]) {
-    return STAR_BOARD_COLORS[4]
-  }
-  else if (starCount < STAR_BOARD_INTERVALS[5] && starCount > STAR_BOARD_INTERVALS[4]) {
-    return STAR_BOARD_COLORS[5]
+  else if (starCount > STAR_BOARD_INTERVALS[3] && starCount < STAR_BOARD_INTERVALS[5]) {
+    return '🌟'
   }
   else if (starCount > STAR_BOARD_INTERVALS[5]) {
-    return STAR_BOARD_COLORS[6]
+    return '🌠'
   }
-
-  return STAR_BOARD_COLORS[0]
 }
+

@@ -51,6 +51,10 @@ export async function findMessageFromGuild(guild: Guild, id: string) {
   }
 }
 
-export async function getStarboardChannel(guild: Guild): Promise<TextChannel | NewsChannel | undefined> {
-  return guild.channels.cache.find(c => c.isText() && c.name.includes('starboard')) as TextChannel | NewsChannel | undefined
+export async function getStarboardChannel(
+  guild: Guild
+): Promise<TextChannel | NewsChannel | undefined> {
+  return guild.channels.cache.find(
+    c => c.isText() && c.name.includes('starboard')
+  ) as TextChannel | NewsChannel | undefined
 }

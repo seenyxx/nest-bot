@@ -1,10 +1,10 @@
 import { GuildMember, MessageReaction, PartialUser, User } from 'discord.js'
 import { onEvent } from '../client/handlers/event'
 import { getReactionRole, removeReactionRole } from '../database/reactionRoles'
-import { getStarboardMessage, removeStarboardMessage } from '../database/starboard';
-import { StarboardMessage } from '../renderers/starboard/message';
-import { STAR_BOARD_REACTION } from '../util/constants';
-import { getStarboardChannel } from '../util/helpers';
+import { getStarboardMessage, removeStarboardMessage } from '../database/starboard'
+import { StarboardMessage } from '../renderers/starboard/message'
+import { STAR_BOARD_MIN, STAR_BOARD_REACTION } from '../util/constants'
+import { getStarboardChannel } from '../util/helpers'
 
 export default onEvent('messageReactionRemove', async (reaction, user) => {
   if (reaction.partial) await reaction.fetch()
@@ -19,7 +19,10 @@ export default onEvent('messageReactionRemove', async (reaction, user) => {
   }
 })
 
-async function parseReactionRole(reaction: MessageReaction, user: User | PartialUser) {
+async function parseReactionRole(
+  reaction: MessageReaction,
+  user: User | PartialUser
+) {
   if (!reaction.message.guild) return
 
   const msg = reaction.message
@@ -45,7 +48,12 @@ async function parseReactionRole(reaction: MessageReaction, user: User | Partial
 }
 
 async function parseStarboard(reaction: MessageReaction, user: User | PartialUser) {
-  if (reaction.emoji.name !== STAR_BOARD_REACTION || !reaction.message.guild || reaction.message.author.bot) return
+  if (
+    reaction.emoji.name !== STAR_BOARD_REACTION ||
+    !reaction.message.guild ||
+    reaction.message.author.bot
+  )
+    return
 
   const guild = reaction.message.guild
   const starboard = await getStarboardChannel(reaction.message.guild)
@@ -53,28 +61,25 @@ async function parseStarboard(reaction: MessageReaction, user: User | PartialUse
   const count = reaction.count
 
   if (!count) return
-  
+
   if (starboard) {
     const starboardMsg = await getStarboardMessage(guild.id, msg.id)
-    
+
     if (!starboardMsg) return
-    
+
     const fetchedMsg = await starboard.messages.fetch(starboardMsg).catch(no => {})
 
     if (fetchedMsg) {
-      if (count === 0) {
+      if (count < STAR_BOARD_MIN) {
         await removeStarboardMessage(guild.id, msg.id)
         fetchedMsg.delete()
-      }
-      else {
+      } else {
         fetchedMsg.edit(new StarboardMessage(msg, count))
       }
-    }
-    else {
-      if (count === 0) {
+    } else {
+      if (count < STAR_BOARD_MIN) {
         await removeStarboardMessage(guild.id, msg.id)
-      }
-      else {
+      } else {
         starboard.send(new StarboardMessage(msg, count))
       }
     }

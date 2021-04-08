@@ -60,14 +60,7 @@ export const EMOJI_REGEX = /[\u{1f300}-\u{1f5ff}\u{1f900}-\u{1f9ff}\u{1f600}-\u{
 export const MAX_REACTION_ROLE_COUNT = 50
 
 export const STAR_BOARD_REACTION = '⭐'
-export const STAR_BOARD_COLORS = [
-  '#b3d0ff',
-  '#d375ff',
-  '#75ff9c',
-  '#ff759e',
-  '#ffcc75',
-  '#faff63',
-  '#fff200'
-]
+export const STAR_BOARD_COLOR = '#b3d0ff'
 export const STAR_BOARD_INTERVALS = [5, 10, 15, 20, 25, 35]
 export const STAR_BOARD_MIN = 2
+export const STAR_BOARD_COLOR_MULTI = 5
