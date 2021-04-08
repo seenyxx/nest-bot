@@ -1,7 +1,9 @@
 import { MessageEmbed } from 'discord.js'
+
 import { HelpCategories } from '../../client/handlers/command'
-import { THEME_COLORS } from '../../util/constants'
 import { botCache } from '../../util/cache'
+import { THEME_COLORS } from '../../util/constants'
+import { colorCyan } from '../format/colors'
 import { codeBlock } from '../format/other'
 
 export class CategoryHelpMenu extends MessageEmbed {
@@ -9,6 +11,7 @@ export class CategoryHelpMenu extends MessageEmbed {
     super()
     this.setColor(THEME_COLORS.info)
     this.setTitle(`Help for \`${helpCat}\``)
+    this.setDescription(colorCyan(botCache.helpDisplays[helpCat]))
     this.addField('Commands', formatCategory(helpCat))
   }
 }
