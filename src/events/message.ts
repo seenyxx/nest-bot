@@ -47,7 +47,7 @@ async function parseCommand(msg: Message, sc?: boolean) {
 
   const cmd = botCache.commands.get(command)
 
-  if (!cmd) return
+  if (!cmd) return sc ? true : false
   if (cmd.opts.guildOnly && !msg.guild) {
     return msg.reply(new GuildOnlyError())
   }

@@ -1,4 +1,4 @@
-import { Guild, PermissionResolvable, TextChannel } from 'discord.js'
+import { Guild, NewsChannel, PermissionResolvable, TextChannel } from 'discord.js'
 
 export function isDevelopment() {
   return process.env.NODE_ENV === 'production' ? false : true
@@ -49,4 +49,8 @@ export async function findMessageFromGuild(guild: Guild, id: string) {
     let target = await (c as TextChannel).messages.fetch(id).catch(no => {})
     if (target) return target
   }
+}
+
+export async function getStarboardChannel(guild: Guild): Promise<TextChannel | NewsChannel | undefined> {
+  return guild.channels.cache.find(c => c.isText() && c.name.includes('starboard')) as TextChannel | NewsChannel | undefined
 }

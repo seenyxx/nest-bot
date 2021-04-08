@@ -10,17 +10,17 @@ import {
 export default createSubCommand(
   {
     parents: ['rr', 'reaction-role'],
-    triggers: ['create', 'make'],
+    triggers: ['count', 'counter'],
     category: 'moderation',
-    cooldown: 10,
-    desc: 'Provides a setup for a reaction role.',
+    cooldown: 5,
+    desc: 'Tells you the amount of reaction roles on your server.',
     requiredPermissions: PERMISSION_LEVELS.user,
     guildOnly: true,
   },
   async (msg: Message, args: string[]) => {
     if (!msg.guild) return
 
-    const count = getRRCount(msg.guild.id)
+    const count = await getRRCount(msg.guild.id)
     const embed = new MessageEmbed()
       .setColor(THEME_COLORS.info)
       .setTitle('Reaction role count')
