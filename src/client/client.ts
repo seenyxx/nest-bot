@@ -1,4 +1,4 @@
-import { Client } from 'discord.js'
+import { Client, ClientUser } from 'discord.js'
 import { botCache } from '../util/cache'
 import { loadCommands, loadEvents } from './loaders'
 
@@ -12,6 +12,8 @@ export class BotClient extends Client {
   async init() {
     await loadCommands()
     await loadEvents(this)
-    this.login(botCache.config.token)
+    await this.login(botCache.config.token)
+
+    botCache.botUser = this.user as ClientUser
   }
 }

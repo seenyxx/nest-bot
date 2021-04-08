@@ -3,6 +3,7 @@ import { createCommand } from '../../client/handlers/command'
 import { PERMISSION_LEVELS, THEME_COLORS } from '../../util/constants'
 import { colorGreen, colorBlue } from '../../renderers/format/colors'
 import { codeBlock } from '../../renderers/format/other'
+import { calculateMemoryUsageMB, parseDisplayUptime } from '../../util/helpers';
 
 export default createCommand(
   {
@@ -18,12 +19,7 @@ export default createCommand(
       .setTitle('Process Statistics')
       .addField(
         'Memory Heap Size',
-        codeBlock(`[${process.memoryUsage().heapUsed / 1000}](KB)`, 'md'),
-        true
-      )
-      .addField(
-        'Memory Heap Total',
-        codeBlock(`[${process.memoryUsage().heapTotal / 1000}](KB)`, 'md'),
+        codeBlock(`[${calculateMemoryUsageMB()}](MB)`, 'md'),
         true
       )
       .addField(
@@ -31,7 +27,7 @@ export default createCommand(
         colorBlue(`${process.cpuUsage().system / 1000}%`),
         true
       )
-      .addField('Uptime', colorGreen(`${process.uptime()}s`))
+      .addField('Uptime', colorGreen(`${parseDisplayUptime(process.uptime())[1]}`))
 
     msg.reply(embed)
   }

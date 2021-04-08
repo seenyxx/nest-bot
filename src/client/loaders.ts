@@ -21,8 +21,8 @@ export async function loadCommands(path?: string) {
       if (module) {
         module.opts.triggers.forEach(trigger => {
           if (!botCache.commands.get(trigger)) {
-            console.log(
-              `[CMD] -> Loading trigger: ${trigger} for command: ${module.opts.triggers[0]}`
+            loaderLogString(
+              `[💬] (CMD) -> Loading trigger: ${trigger} for command: ${module.opts.triggers[0]}`
             )
             botCache.commands.set(trigger, module)
           }
@@ -46,9 +46,21 @@ export async function loadEvents(client: BotClient, path?: string) {
       ).default
 
       if (module) {
-        console.log(`[EVENTS] -> Loading event: ${module.on}`)
+        loaderLogString(`[🔔] (EVT) -> Loading event: ${module.on}`)
         client.on(module.on, module.exec)
       }
     }
+  }
+}
+
+const logLength = 80
+
+function loaderLogString(txt: string, end?: string) {
+  if (txt.length < logLength) {
+    let extraCharacters = Array(logLength - txt.length).fill(' ').join('')
+    console.log(txt.concat(extraCharacters).concat(`${end ? end : '| ✅ |'}`))
+  }
+  else {
+    console.log(txt.concat(`${end ? end : '| ✅ |'}`))
   }
 }

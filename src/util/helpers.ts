@@ -58,3 +58,28 @@ export async function getStarboardChannel(
     c => c.isText() && c.name.includes('starboard')
   ) as TextChannel | NewsChannel | undefined
 }
+
+export function calculateMemoryUsageMB() {
+  return Math.floor(process.memoryUsage().heapUsed / 1024 / 1024 * 100) / 100
+}
+
+export function parseDisplayUptime(uptime: number) {
+  let secs = Math.floor(uptime)
+
+  let days = Math.floor(secs / (3600 * 24))
+
+  secs -= days * 3600 * 24
+
+  let hours = Math.floor(secs / 3600)
+
+  secs -= hours * 3600
+
+  let mins = Math.floor(secs / 60)
+
+  secs -= mins * 60
+
+  return [
+    `${days}:${hours}:${mins}:${secs}`,
+    `${days}d ${hours}h ${mins}m ${secs}s`,
+  ]
+}
