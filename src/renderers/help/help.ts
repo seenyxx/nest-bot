@@ -14,7 +14,8 @@ export class DefaultHelpMenu extends MessageEmbed {
     categories.forEach(cat => {
       this.addField(
         botCache.helpDisplays[cat],
-        `${botCache.config.prefix}help ${cat}`
+        `\`${botCache.config.prefix}help ${cat}\``,
+        true
       )
     })
   }

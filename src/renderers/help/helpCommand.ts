@@ -23,20 +23,22 @@ export class CommandHelpMenu extends MessageEmbed {
     this.addField(
       'Usage',
       `${codeBlock(
-        `[${command.opts.triggers[0]}] ${command.opts.usage || ''}`,
-        'ini'
+        `${command.opts.triggers[0]} ${command.opts.usage || ''}`,
+        'xml'
       )}`
     )
-    this.addField(
-      'Aliases',
-      command.opts.triggers.slice(1, command.opts.triggers.length)
-        ? joinArray(
-            command.opts.triggers.slice(1, command.opts.triggers.length),
-            '` `',
-            '`'
-          )
-        : 'None'
-    )
+
+    if (command.opts.triggers.length > 1) {
+      this.addField(
+        'Aliases',
+        joinArray(
+          command.opts.triggers.slice(1, command.opts.triggers.length),
+          '` `',
+          '`'
+        )
+      )
+    }
+
     this.addField(
       'Required Permissions',
       colorCyan(

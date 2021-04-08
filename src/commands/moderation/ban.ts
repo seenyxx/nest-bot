@@ -20,7 +20,7 @@ export default createCommand(
     argsCount: 1,
     missingArgs: 'You need to mention a user.',
     guildOnly: true,
-    usage: '<User> <Reason?>',
+    usage: '<User> <Reason ?>',
   },
   async (msg: Message, args: string[]) => {
     if (!msg.guild) return

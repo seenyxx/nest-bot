@@ -1,4 +1,5 @@
-import { PermissionResolvable } from 'discord.js'
+import { Guild, PermissionResolvable, TextChannel } from 'discord.js'
+
 export function isDevelopment() {
   return process.env.NODE_ENV === 'production' ? false : true
 }
@@ -38,4 +39,14 @@ export function shortenNumber(number: number) {
 
 export function duplicateObject<V>(o: V): V {
   return JSON.parse(JSON.stringify(o))
+}
+
+export async function findMessageFromGuild(guild: Guild, id: string) {
+  let channels = guild.channels.cache
+    .filter(c => c.type === 'text' || c.type === 'news')
+    .array()
+  for (let c of channels) {
+    let target = await (c as TextChannel).messages.fetch(id).catch(no => {})
+    if (target) return target
+  }
 }

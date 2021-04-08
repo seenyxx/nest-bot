@@ -5,7 +5,7 @@ import { loadCommands, loadEvents } from './loaders'
 export class BotClient extends Client {
   constructor() {
     super({
-      partials: ['MESSAGE', 'REACTION', 'USER'],
+      partials: ['MESSAGE', 'REACTION', 'USER', 'CHANNEL'],
     })
   }
 

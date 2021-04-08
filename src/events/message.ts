@@ -9,7 +9,7 @@ import { MissingArgumentsError } from '../renderers/errors/missingArgs'
 import { StandardError } from '../renderers/errors/std'
 import { CooldownError } from '../renderers/errors/cooldown'
 import { LevelManager } from '../database/levels'
-import { Message } from 'discord.js';
+import { Message } from 'discord.js'
 
 export default onEvent('message', async msg => {
   if (msg.author.bot) return
@@ -20,11 +20,13 @@ export default onEvent('message', async msg => {
     user.updateXp(msg)
   }
 
-  parseCommand(msg)
+  if (await parseCommand(msg, true)) {
+    parseCommand(msg)
+  }
 })
 
-
 async function parseCommand(msg: Message, sc?: boolean) {
+  if (!msg.content.startsWith(botCache.config.prefix)) return
   const args = msg.content
     .substr(botCache.config.prefix.length, msg.content.length)
     .split(/ +/g)
@@ -33,17 +35,15 @@ async function parseCommand(msg: Message, sc?: boolean) {
   let sub = args[0]
 
   if (!command) {
-    parseCommand(msg, true)
-    return
+    return true
   }
 
   if (sc && !sub) {
-    return
+    return true
   } else if (sc && sub) {
     command = command.concat(` ${sub}`)
     args.shift()
   }
-
 
   const cmd = botCache.commands.get(command)
 
@@ -90,12 +90,13 @@ async function parseCommand(msg: Message, sc?: boolean) {
   if (cmd.opts.typing) {
     msg.channel.startTyping()
   }
-  await cmd.exec(msg, args).catch(e => msg.reply(new StandardError(e)))
   botCache.cooldowns.setCooldown(
     cmd.opts.triggers[0],
     msg.author.id,
     cmd.opts.cooldown
   )
+
+  await cmd.exec(msg, args).catch(e => msg.reply(new StandardError(e)))
 
   if (cmd.opts.typing) {
     msg.channel.stopTyping()

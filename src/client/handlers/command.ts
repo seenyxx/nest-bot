@@ -8,17 +8,16 @@ export function createCommand(opts: CommandOpts, func: CommandFunction): Command
   }
 }
 
-export function createSubCommand(opts: SubCommandOpts, func: CommandFunction): Command {
+export function createSubCommand(
+  opts: SubCommandOpts,
+  func: CommandFunction
+): Command {
   let modOpts = duplicateObject(opts)
 
   modOpts.triggers = []
   opts.parents.forEach(p => {
-    modOpts.triggers = modOpts.triggers.concat(opts.triggers.filter(t => t !== '_default').map(t => `${p} ${t}`))
+    modOpts.triggers = modOpts.triggers.concat(opts.triggers.map(t => `${p} ${t}`))
   })
-
-  if (opts.triggers.includes('_default')) {
-    modOpts.triggers = modOpts.triggers.concat(opts.parents)
-  }
 
   return {
     opts: modOpts,

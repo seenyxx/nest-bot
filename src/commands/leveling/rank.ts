@@ -13,12 +13,15 @@ export default createCommand(
     requiredPermissions: PERMISSION_LEVELS.user,
     guildOnly: true,
     typing: true,
+    usage: '<Member ?>',
   },
   async (msg: Message, args: string[]) => {
     if (!msg.member || !msg.guild) return
 
+    const member = msg.mentions.members?.first() || msg.member
+
     const card = new RankCard()
-    await card.render(msg.member)
+    await card.render(member)
 
     msg.reply(new MessageAttachment(card.toBuffer()))
   }
