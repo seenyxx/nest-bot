@@ -1,4 +1,4 @@
-import { onEvent } from '../client/handlers/event';
+import { onEvent } from '../client/handlers/event'
 import { botCache } from '../util/cache'
 
 export default onEvent('shardReady', s => {

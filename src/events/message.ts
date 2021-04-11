@@ -1,15 +1,16 @@
+import { Message } from 'discord.js'
+
 import { onEvent } from '../client/handlers/event'
-import { botCache } from '../util/cache'
-import {
-  PermissionError,
-  ClientPermissionError,
-} from '../renderers/errors/permission'
+import { LevelManager } from '../database/levels'
+import { CooldownError } from '../renderers/errors/cooldown'
 import { GuildOnlyError } from '../renderers/errors/guildOnly'
 import { MissingArgumentsError } from '../renderers/errors/missingArgs'
+import {
+  ClientPermissionError,
+  PermissionError,
+} from '../renderers/errors/permission'
 import { StandardError } from '../renderers/errors/std'
-import { CooldownError } from '../renderers/errors/cooldown'
-import { LevelManager } from '../database/levels'
-import { Message } from 'discord.js'
+import { botCache } from '../util/cache'
 
 export default onEvent('message', async msg => {
   if (msg.author.bot) return
@@ -96,8 +97,13 @@ async function parseCommand(msg: Message, sc?: boolean) {
     cmd.opts.cooldown
   )
 
+  if (process.env.NODE_ENV !== 'production') {
+    console.time(`︱⌚︱USE︱ -> Executed command: ${command}`)
+  }
   await cmd.exec(msg, args).catch(e => msg.reply(new StandardError(e)))
-
+  if (process.env.NODE_ENV !== 'production') {
+    console.timeEnd(`︱⌚︱USE︱ -> Executed command: ${command}`)
+  }
   if (cmd.opts.typing) {
     msg.channel.stopTyping()
   }

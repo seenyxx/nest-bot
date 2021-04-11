@@ -42,14 +42,14 @@ export const XP_COOLDOWN = 45
 export const DEFAULT_XP = 30
 
 export const RANK_SIZE_MULTI = 0.32
-export const RANK_CARD_ROUND_RADIUS = 30 * RANK_SIZE_MULTI
+export const RANK_CARD_ROUND_RADIUS = 60 * RANK_SIZE_MULTI
 export const COLOR_WHEEL_TURN = -25
 export const RANK_BG_PRIMARY = '#161E22'
 export const RANK_BG_SECONDARY = '#3B464B'
-export const RANK_BORDER_SIZE = 50 * RANK_SIZE_MULTI
+export const RANK_BORDER_SIZE = 35 * RANK_SIZE_MULTI
 export const RANK_PFP_SIZE = 480 * RANK_SIZE_MULTI
 export const PROGRESS_WIDTH = 1750 * RANK_SIZE_MULTI
-export const PROGRESS_HEIGHT = 80 * RANK_SIZE_MULTI
+export const PROGRESS_HEIGHT = 100 * RANK_SIZE_MULTI
 export const RANK_FONT = 'Ubuntu Mono, monospace'
 export const RANK_TEXT_COLOR = '#FFFFFF'
 
@@ -64,3 +64,5 @@ export const STAR_BOARD_COLOR = '#b3d0ff'
 export const STAR_BOARD_INTERVALS = [5, 10, 15, 20, 25, 35]
 export const STAR_BOARD_MIN = 2
 export const STAR_BOARD_COLOR_MULTI = 5
+
+export const POLL_EMOJIS = ['🔴', '🟠', '🟡', '🟢', '🔵', '🟣']

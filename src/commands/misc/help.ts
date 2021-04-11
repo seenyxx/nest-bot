@@ -16,7 +16,7 @@ export default createCommand(
     usage: '<Command/Menu?>',
   },
   async (msg: Message, args: string[]) => {
-    const menuOrCommand = args[0] as HelpCategories
+    const menuOrCommand = args.join(' ').trim() as HelpCategories
 
     if (!menuOrCommand) {
       return msg.reply(new DefaultHelpMenu())

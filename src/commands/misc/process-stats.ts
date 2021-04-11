@@ -3,7 +3,7 @@ import { createCommand } from '../../client/handlers/command'
 import { PERMISSION_LEVELS, THEME_COLORS } from '../../util/constants'
 import { colorGreen, colorBlue } from '../../renderers/format/colors'
 import { codeBlock } from '../../renderers/format/other'
-import { calculateMemoryUsageMB, parseDisplayUptime } from '../../util/helpers';
+import { calculateMemoryUsageMB, parseDisplayUptime } from '../../util/helpers'
 
 export default createCommand(
   {

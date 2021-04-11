@@ -10,7 +10,20 @@ export class InfoMessage extends MessageEmbed {
     super()
     this.setColor(THEME_COLORS.info)
     this.setTitle('About')
-    this.addField('Stats', codeBlock(`[Memory] ${calculateMemoryUsageMB()} MB\n\n[Discord.js Version] ${require(`${__dirname}/../../../package.json`).dependencies['discord.js']}\n[Node.js Version] ${process.versions.node}\n[Shards] ${botCache.shardCount}`, 'ini'))
-    this.addField('Uptime', codeBlock(parseDisplayUptime(process.uptime())[1], 'css'))
+    this.addField(
+      'Stats',
+      codeBlock(
+        `[Memory] ${calculateMemoryUsageMB()} MB\n\n[Discord.js Version] ${
+          require(`${__dirname}/../../../package.json`).dependencies['discord.js']
+        }\n[Node.js Version] ${process.versions.node}\n[Shards] ${
+          botCache.shardCount
+        }`,
+        'ini'
+      )
+    )
+    this.addField(
+      'Uptime',
+      codeBlock(parseDisplayUptime(process.uptime())[1], 'css')
+    )
   }
 }

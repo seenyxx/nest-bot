@@ -55,12 +55,13 @@ export async function loadEvents(client: BotClient, path?: string) {
 
 const logLength = 80
 
-function loaderLogString(txt: string, end?: string) {
+export function loaderLogString(txt: string, end?: string) {
   if (txt.length < logLength) {
-    let extraCharacters = Array(logLength - txt.length).fill(' ').join('')
+    let extraCharacters = Array(logLength - txt.length)
+      .fill(' ')
+      .join('')
     console.log(txt.concat(extraCharacters).concat(`${end ? end : '︱✅︱'}`))
-  }
-  else {
+  } else {
     console.log(txt.concat(`${end ? end : '︱✅︱'}`))
   }
 }

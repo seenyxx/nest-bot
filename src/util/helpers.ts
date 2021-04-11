@@ -60,7 +60,7 @@ export async function getStarboardChannel(
 }
 
 export function calculateMemoryUsageMB() {
-  return Math.floor(process.memoryUsage().heapUsed / 1024 / 1024 * 100) / 100
+  return Math.floor((process.memoryUsage().heapUsed / 1024 / 1024) * 100) / 100
 }
 
 export function parseDisplayUptime(uptime: number) {
@@ -78,8 +78,10 @@ export function parseDisplayUptime(uptime: number) {
 
   secs -= mins * 60
 
-  return [
-    `${days}:${hours}:${mins}:${secs}`,
-    `${days}d ${hours}h ${mins}m ${secs}s`,
-  ]
+  return [`${days}:${hours}:${mins}:${secs}`, `${days}d ${hours}h ${mins}m ${secs}s`]
+}
+
+export function stripString(str: string) {
+  let str2 = str.substr(1, str.length)
+  return str2.substr(0, str2.length - 1)
 }

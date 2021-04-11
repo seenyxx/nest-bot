@@ -13,7 +13,7 @@ export const botCache: BotCache = {
     misc: '🧊 Miscellaneous',
     moderation: '🔨 Moderation',
   },
-  shardCount: 0
+  shardCount: 0,
 }
 
 export interface BotCache {
