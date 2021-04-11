@@ -3,6 +3,7 @@ import { PERMISSION_LEVELS } from '../../../util/constants'
 import { getMuteRole } from '../../../util/helpers';
 import { Success } from '../../../renderers/moderation/success'
 import { mentionUser } from '../../../renderers/format/mentions';
+import { colorGreen } from '../../../renderers/format/colors'
 export default createCommand({
   category: 'moderation',
   triggers: ['unmute', 'unsilence'],
@@ -12,7 +13,7 @@ export default createCommand({
   argsCount: 1,
   missingArgs: 'You must mention a member.',
   guildOnly: true,
-  usage: '<User>'
+  usage: '<User> <Reason?>'
 }, async (msg, args) => {
   if (!msg.guild) return
 
@@ -24,7 +25,10 @@ export default createCommand({
 
   const muteRole = await getMuteRole(msg.guild)
 
-  member.roles.remove(muteRole).catch(no => {})
+  args.shift()
+  const reason = args.join(' ') || 'No reason provided'
 
-  msg.reply(new Success('Unmuted User', `Unmuted ${mentionUser(member.id)}\nIssued by ${mentionUser(msg.author.id)}`))
+  member?.roles.remove(muteRole, reason).catch(no => {})
+
+  msg.reply(new Success('Unmuted User', `Unmuted ${mentionUser(member.id)}\nIssued by ${mentionUser(msg.author.id)}`).addField('Reason', colorGreen(reason)))
 })
