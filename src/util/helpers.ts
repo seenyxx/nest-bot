@@ -85,3 +85,22 @@ export function stripString(str: string) {
   let str2 = str.substr(1, str.length)
   return str2.substr(0, str2.length - 1)
 }
+
+export async function getMuteRole(guild: Guild) {
+  const muteRole = guild.roles.cache.find(r => r.name.includes('Muted')) || await guild.roles.create({
+    data: {
+      name: 'Muted',
+      hoist: false,
+      mentionable: false,
+    }
+  })
+
+  guild.channels.cache.forEach(c => {
+    c.createOverwrite(muteRole, {
+      SEND_MESSAGES: false,
+      ADD_REACTIONS: false,
+    })
+  })
+
+  return muteRole
+}
