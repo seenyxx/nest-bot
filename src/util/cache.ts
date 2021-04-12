@@ -17,10 +17,10 @@ export const botCache: BotCache = {
 }
 
 export interface BotCache {
-  config: Configuration
   commands: Collection<string, Command>
   cooldowns: CooldownsManager
   helpDisplays: Record<HelpCategories, string>
   botUser?: ClientUser
   shardCount: number
+  config: Configuration
 }

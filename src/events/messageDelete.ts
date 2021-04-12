@@ -1,14 +1,25 @@
+import { Message, PartialMessage } from 'discord.js'
+
 import { onEvent } from '../client/handlers/event'
 import { getStarboardMessage } from '../database/starboard'
-import { getStarboardChannel } from '../util/helpers'
-import { StarboardMessage } from '../renderers/starboard/message'
-import { STAR_BOARD_REACTION } from '../util/constants'
-import { Message } from 'discord.js'
+import { LogMessageDelete } from '../renderers/guildLogs/msg'
+import { getGuildLogs, getStarboardChannel } from '../util/helpers'
 
 export default onEvent('messageDelete', async msg => {
-  if (msg.partial) await msg.fetch()
-  if (msg.author?.partial) await msg.author.fetch()
+  if (!msg.guild) return
+  if (!msg.content) return
+  
+  parseStarboard(msg)
 
+  const logs = await getGuildLogs(msg.guild)
+
+  if (logs) {
+    logs.send(new LogMessageDelete(msg))
+  }
+})
+
+
+async function parseStarboard(msg: Message | PartialMessage) {
   if (msg.author?.bot) return
   if (!msg.guild) return
 
@@ -25,4 +36,4 @@ export default onEvent('messageDelete', async msg => {
       fetchedMsg.delete()
     }
   }
-})
+}

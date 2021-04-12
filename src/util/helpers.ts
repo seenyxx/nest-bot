@@ -1,14 +1,17 @@
 import { Guild, NewsChannel, PermissionResolvable, TextChannel } from 'discord.js'
+import { readFileSync } from 'fs';
+import { deleteLogsWebhook, getLogsWebhook } from '../database/config';
 
-export function isDevelopment() {
-  return process.env.NODE_ENV === 'production' ? false : true
-}
 
 export function getConfig(): Configuration {
   const path = `${__dirname}/../../${
-    isDevelopment() ? 'config.dev.json' : 'config.json'
+    process.env.NODE_ENV !== 'production' ? 'config.dev.json' : 'config.json'
   }`
-  return require(path)
+  return JSON.parse(readFileSync(path).toString())
+}
+
+export function getDatabaseUrl() {
+  return getConfig().database
 }
 
 export interface Configuration {
@@ -103,4 +106,21 @@ export async function getMuteRole(guild: Guild) {
   })
 
   return muteRole
+}
+
+export async function getGuildLogs(guild: Guild) {
+  const logsId = await getLogsWebhook(guild.id)
+  
+  if (!logsId) return
+
+  const whs = await guild.fetchWebhooks()
+
+  const wh = whs.find(wh => wh.id === logsId)
+
+  if (!wh) {
+    deleteLogsWebhook(guild.id)
+    return
+  }
+
+  return wh
 }

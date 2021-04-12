@@ -1,11 +1,31 @@
 import { onEvent } from '../client/handlers/event'
 import { getStarboardMessage } from '../database/starboard'
-import { getStarboardChannel } from '../util/helpers'
+import { getGuildLogs, getStarboardChannel } from '../util/helpers'
 import { StarboardMessage } from '../renderers/starboard/message'
 import { STAR_BOARD_MIN, STAR_BOARD_REACTION } from '../util/constants'
-import { Message } from 'discord.js'
+import { Guild, Message, PartialMessage, TextChannel } from 'discord.js'
+import { LogBulkMessageDelete, LogMessageEdit } from '../renderers/guildLogs/msg'
 
 export default onEvent('messageUpdate', async (oldMsg, newMsg) => {
+  if (newMsg.partial) await newMsg.fetch()
+  if (oldMsg.partial) await oldMsg.fetch()
+  if (newMsg.author?.partial) await newMsg.author.fetch()
+  if (oldMsg.author?.partial) await oldMsg.author.fetch()
+
+  if (newMsg.author?.bot) return
+  if (!newMsg.guild) return
+
+  parseStarboard(oldMsg, newMsg)
+  
+  const logs = await getGuildLogs(newMsg.guild)
+
+  if (logs && oldMsg.content && newMsg.content) {
+    logs.send(new LogMessageEdit(oldMsg, newMsg))
+  }
+})
+
+
+async function parseStarboard(oldMsg: Message | PartialMessage, newMsg: Message | PartialMessage) {
   if (newMsg.partial) await newMsg.fetch()
   if (oldMsg.partial) await oldMsg.fetch()
   if (newMsg.author?.partial) await newMsg.author.fetch()
@@ -41,4 +61,4 @@ export default onEvent('messageUpdate', async (oldMsg, newMsg) => {
       msg.edit(new StarboardMessage(newMsg as Message, count))
     }
   }
-})
+}
