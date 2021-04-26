@@ -27,7 +27,6 @@ export function formatPermissions(a: PermissionResolvable[]) {
   return a.map(perm => eachWordUppercase(perm.toString().replace(/_/g, ' ')))
 }
 
-
 export function eachWordUppercase(phrase: string) {
   return phrase
     .toLowerCase()

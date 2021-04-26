@@ -47,7 +47,15 @@ export type LogOptsKeys =
   | 'server'
   | 'channels'
 
-export const LogOptsKeysArray: LogOptsKeys[] = ['msgs', 'moderation', 'roles', 'members', 'users', 'server', 'channels']
+export const LogOptsKeysArray: LogOptsKeys[] = [
+  'msgs',
+  'moderation',
+  'roles',
+  'members',
+  'users',
+  'server',
+  'channels',
+]
 
 export async function setGuidLogsOptions(id: string, opts: LogOptions) {
   await guilds.set(`${id}.logOpts`, opts)

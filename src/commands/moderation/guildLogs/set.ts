@@ -13,6 +13,8 @@ export default createSubCommand(
     requiredPermissions: PERMISSION_LEVELS.user.concat([
       'MANAGE_WEBHOOKS',
       'MANAGE_CHANNELS',
+      'MANAGE_MESSAGES',
+      'MANAGE_GUILD',
     ]),
     category: 'moderation',
     guildOnly: true,

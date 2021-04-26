@@ -1,6 +1,13 @@
 import { createSubCommand } from '../../../client/handlers/command'
-import { LogOptions, LogOptsKeys, LogOptsKeysArray, updateLogOptions } from '../../../database/config';
+import {
+  getGuildLogsOptions,
+  LogOptions,
+  LogOptsKeys,
+  LogOptsKeysArray,
+  updateLogOptions,
+} from '../../../database/config'
 import { PERMISSION_LEVELS } from '../../../util/constants'
+import { LogOptionsMessage } from '../../../renderers/guildLogs/options'
 
 export default createSubCommand(
   {
@@ -30,9 +37,15 @@ export default createSubCommand(
 
     const match = LogOptsKeysArray.some(key => options == key)
 
-    if (!match) throw new Error(`The options need to be one of these:\n${LogOptsKeysArray.join(', ')}`)
+    if (!match)
+      throw new Error(
+        `The options need to be one of these:\n${LogOptsKeysArray.join(', ')}`
+      )
 
     await updateLogOptions(id, options, updatedValue)
 
+    const logOpts = await getGuildLogsOptions(id)
+
+    msg.reply(new LogOptionsMessage(logOpts))
   }
 )
