@@ -16,7 +16,7 @@ export default onEvent('messageUpdate', async (oldMsg, newMsg) => {
   if (!newMsg.guild) return
 
   parseStarboard(oldMsg, newMsg)
-  
+
   const logs = await getGuildLogs(newMsg.guild)
 
   if (logs && oldMsg.content && newMsg.content) {
@@ -24,8 +24,10 @@ export default onEvent('messageUpdate', async (oldMsg, newMsg) => {
   }
 })
 
-
-async function parseStarboard(oldMsg: Message | PartialMessage, newMsg: Message | PartialMessage) {
+async function parseStarboard(
+  oldMsg: Message | PartialMessage,
+  newMsg: Message | PartialMessage
+) {
   if (newMsg.partial) await newMsg.fetch()
   if (oldMsg.partial) await oldMsg.fetch()
   if (newMsg.author?.partial) await newMsg.author.fetch()

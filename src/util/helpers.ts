@@ -1,7 +1,6 @@
 import { Guild, NewsChannel, PermissionResolvable, TextChannel } from 'discord.js'
-import { readFileSync } from 'fs';
-import { deleteLogsWebhook, getLogsWebhook } from '../database/config';
-
+import { readFileSync } from 'fs'
+import { deleteLogsWebhook, getLogsWebhook } from '../database/config'
 
 export function getConfig(): Configuration {
   const path = `${__dirname}/../../${
@@ -27,6 +26,7 @@ export function joinArray(a: any[], sep?: string, ends?: string) {
 export function formatPermissions(a: PermissionResolvable[]) {
   return a.map(perm => eachWordUppercase(perm.toString().replace(/_/g, ' ')))
 }
+
 
 export function eachWordUppercase(phrase: string) {
   return phrase
@@ -90,13 +90,15 @@ export function stripString(str: string) {
 }
 
 export async function getMuteRole(guild: Guild) {
-  const muteRole = guild.roles.cache.find(r => r.name.includes('Muted')) || await guild.roles.create({
-    data: {
-      name: 'Muted',
-      hoist: false,
-      mentionable: false,
-    }
-  })
+  const muteRole =
+    guild.roles.cache.find(r => r.name.includes('Muted')) ||
+    (await guild.roles.create({
+      data: {
+        name: 'Muted',
+        hoist: false,
+        mentionable: false,
+      },
+    }))
 
   guild.channels.cache.forEach(c => {
     c.createOverwrite(muteRole, {
@@ -110,7 +112,7 @@ export async function getMuteRole(guild: Guild) {
 
 export async function getGuildLogs(guild: Guild) {
   const logsId = await getLogsWebhook(guild.id)
-  
+
   if (!logsId) return
 
   const whs = await guild.fetchWebhooks()

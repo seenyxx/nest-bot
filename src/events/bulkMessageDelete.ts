@@ -1,6 +1,6 @@
-import { onEvent } from '../client/handlers/event';
-import { LogBulkMessageDelete } from '../renderers/guildLogs/msg';
-import { getGuildLogs } from '../util/helpers';
+import { onEvent } from '../client/handlers/event'
+import { LogBulkMessageDelete } from '../renderers/guildLogs/msg'
+import { getGuildLogs } from '../util/helpers'
 import { Guild, TextChannel } from 'discord.js'
 
 export default onEvent('messageDeleteBulk', async msgs => {

@@ -8,7 +8,7 @@ import { getGuildLogs, getStarboardChannel } from '../util/helpers'
 export default onEvent('messageDelete', async msg => {
   if (!msg.guild) return
   if (!msg.content) return
-  
+
   parseStarboard(msg)
 
   const logs = await getGuildLogs(msg.guild)
@@ -17,7 +17,6 @@ export default onEvent('messageDelete', async msg => {
     logs.send(new LogMessageDelete(msg))
   }
 })
-
 
 async function parseStarboard(msg: Message | PartialMessage) {
   if (msg.author?.bot) return

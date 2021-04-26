@@ -1,5 +1,5 @@
 import { ColorResolvable, PermissionResolvable } from 'discord.js'
-import { LogOptions } from '../database/config';
+import { LogOptions } from '../database/config'
 
 export const PERMISSION_LEVELS: Record<PermissionLevels, PermissionResolvable[]> = {
   user: ['SEND_MESSAGES', 'READ_MESSAGE_HISTORY', 'VIEW_CHANNEL'],
@@ -68,8 +68,6 @@ export const STAR_BOARD_COLOR_MULTI = 5
 
 export const POLL_EMOJIS = ['🔴', '🟠', '🟡', '🟢', '🔵', '🟣']
 
-
-
 export const DEFAULT_LOGS_OPTS: LogOptions = {
   msgs: false,
   moderation: true,
@@ -77,5 +75,5 @@ export const DEFAULT_LOGS_OPTS: LogOptions = {
   roles: false,
   members: false,
   users: false,
-  server: false
+  server: false,
 }

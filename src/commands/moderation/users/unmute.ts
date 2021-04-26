@@ -1,34 +1,43 @@
 import { createCommand } from '../../../client/handlers/command'
 import { PERMISSION_LEVELS } from '../../../util/constants'
-import { getMuteRole } from '../../../util/helpers';
+import { getMuteRole } from '../../../util/helpers'
 import { Success } from '../../../renderers/moderation/success'
-import { mentionUser } from '../../../renderers/format/mentions';
+import { mentionUser } from '../../../renderers/format/mentions'
 import { colorGreen } from '../../../renderers/format/colors'
-export default createCommand({
-  category: 'moderation',
-  triggers: ['unmute', 'unsilence'],
-  cooldown: 5,
-  desc: 'Unmutes a user which allows them to send messages and react freely.',
-  requiredPermissions: PERMISSION_LEVELS.user.concat('MANAGE_ROLES'),
-  argsCount: 1,
-  missingArgs: 'You must mention a member.',
-  guildOnly: true,
-  usage: '<User> <Reason?>'
-}, async (msg, args) => {
-  if (!msg.guild) return
+export default createCommand(
+  {
+    category: 'moderation',
+    triggers: ['unmute', 'unsilence'],
+    cooldown: 5,
+    desc: 'Unmutes a user which allows them to send messages and react freely.',
+    requiredPermissions: PERMISSION_LEVELS.user.concat('MANAGE_ROLES'),
+    argsCount: 1,
+    missingArgs: 'You must mention a member.',
+    guildOnly: true,
+    usage: '<User> <Reason?>',
+  },
+  async (msg, args) => {
+    if (!msg.guild) return
 
-  if (!msg.mentions.members || !msg.mentions.members.first()) throw new Error('You did not mention a member.')
-  
-  const member = msg.mentions.members.first()
+    if (!msg.mentions.members || !msg.mentions.members.first())
+      throw new Error('You did not mention a member.')
 
-  if (!member) throw new Error('You did not mention a member.')
+    const member = msg.mentions.members.first()
 
-  const muteRole = await getMuteRole(msg.guild)
+    if (!member) throw new Error('You did not mention a member.')
 
-  args.shift()
-  const reason = args.join(' ') || 'No reason provided'
+    const muteRole = await getMuteRole(msg.guild)
 
-  member?.roles.remove(muteRole, reason).catch(no => {})
+    args.shift()
+    const reason = args.join(' ') || 'No reason provided'
 
-  msg.reply(new Success('Unmuted User', `Unmuted ${mentionUser(member.id)}\nIssued by ${mentionUser(msg.author.id)}`).addField('Reason', colorGreen(reason)))
-})
+    member?.roles.remove(muteRole, reason).catch(no => {})
+
+    msg.reply(
+      new Success(
+        'Unmuted User',
+        `Unmuted ${mentionUser(member.id)}\nIssued by ${mentionUser(msg.author.id)}`
+      ).addField('Reason', colorGreen(reason))
+    )
+  }
+)

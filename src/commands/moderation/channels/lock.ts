@@ -17,13 +17,18 @@ export default createSubCommand(
   async (msg, args) => {
     if (!msg.guild) return
 
-    let channel = msg.mentions.channels.first() || msg.channel as TextChannel
+    let channel = msg.mentions.channels.first() || (msg.channel as TextChannel)
 
     channel.createOverwrite(msg.guild.roles.everyone, {
       SEND_MESSAGES: false,
-      ADD_REACTIONS: false
+      ADD_REACTIONS: false,
     })
 
-    msg.reply(new Success('Locked Channel', 'Everyone is now prohibited from speaking in this channel.'))
+    msg.reply(
+      new Success(
+        'Locked Channel',
+        'Everyone is now prohibited from speaking in this channel.'
+      )
+    )
   }
 )
