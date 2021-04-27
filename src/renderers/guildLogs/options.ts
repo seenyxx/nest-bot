@@ -1,6 +1,7 @@
 import { MessageEmbed } from 'discord.js'
 import { getGuildLogsOptions, LogOptions, LogOptsKeys } from '../../database/config'
 import { THEME_COLORS } from '../../util/constants'
+import { padTextToLength } from '../format/other'
 
 export class LogOptionsMessage extends MessageEmbed {
   constructor(logOpts: LogOptions) {
@@ -10,9 +11,9 @@ export class LogOptionsMessage extends MessageEmbed {
 
     for (const key in logOpts) {
       str = str.concat(
-        `[${key}](https://discord.com) : \`${
+        `${padTextToLength(key, 15)}: \`${
           logOpts[key as LogOptsKeys] === true ? '🟢' : '🔴'
-        }\``
+        }\`\n`
       )
     }
 

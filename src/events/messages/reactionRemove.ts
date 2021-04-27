@@ -1,10 +1,13 @@
 import { GuildMember, MessageReaction, PartialUser, User } from 'discord.js'
-import { onEvent } from '../client/handlers/event'
-import { getReactionRole, removeReactionRole } from '../database/reactionRoles'
-import { getStarboardMessage, removeStarboardMessage } from '../database/starboard'
-import { StarboardMessage } from '../renderers/starboard/message'
-import { STAR_BOARD_MIN, STAR_BOARD_REACTION } from '../util/constants'
-import { getStarboardChannel } from '../util/helpers'
+import { onEvent } from '../../client/handlers/event'
+import { getReactionRole, removeReactionRole } from '../../database/reactionRoles'
+import {
+  getStarboardMessage,
+  removeStarboardMessage,
+} from '../../database/starboard'
+import { StarboardMessage } from '../../renderers/starboard/message'
+import { STAR_BOARD_MIN, STAR_BOARD_REACTION } from '../../util/constants'
+import { getStarboardChannel } from '../../util/helpers'
 
 export default onEvent('messageReactionRemove', async (reaction, user) => {
   if (reaction.partial) await reaction.fetch()

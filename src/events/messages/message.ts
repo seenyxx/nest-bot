@@ -1,16 +1,16 @@
 import { Message } from 'discord.js'
 
-import { onEvent } from '../client/handlers/event'
-import { LevelManager } from '../database/levels'
-import { CooldownError } from '../renderers/errors/cooldown'
-import { GuildOnlyError } from '../renderers/errors/guildOnly'
-import { MissingArgumentsError } from '../renderers/errors/missingArgs'
+import { onEvent } from '../../client/handlers/event'
+import { LevelManager } from '../../database/levels'
+import { CooldownError } from '../../renderers/errors/cooldown'
+import { GuildOnlyError } from '../../renderers/errors/guildOnly'
+import { MissingArgumentsError } from '../../renderers/errors/missingArgs'
 import {
   ClientPermissionError,
   PermissionError,
-} from '../renderers/errors/permission'
-import { StandardError } from '../renderers/errors/std'
-import { botCache } from '../util/cache'
+} from '../../renderers/errors/permission'
+import { StandardError } from '../../renderers/errors/std'
+import { botCache } from '../../util/cache'
 
 export default onEvent('message', async msg => {
   if (msg.author.bot) return

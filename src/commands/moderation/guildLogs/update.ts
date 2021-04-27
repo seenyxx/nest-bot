@@ -31,8 +31,7 @@ export default createSubCommand(
     if (!msg.guild) return
 
     const options = args[0].trim() as LogOptsKeys
-    const updatedValue =
-      args[1] === 'true' || args[1] === 'enable' || args[1] === 'disabled'
+    const updatedValue = args[1] === 'true'
     const id = msg.guild.id
 
     const match = LogOptsKeysArray.some(key => options == key)

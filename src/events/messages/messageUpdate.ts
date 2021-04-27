@@ -1,10 +1,11 @@
-import { onEvent } from '../client/handlers/event'
-import { getStarboardMessage } from '../database/starboard'
-import { getGuildLogs, getStarboardChannel } from '../util/helpers'
-import { StarboardMessage } from '../renderers/starboard/message'
-import { STAR_BOARD_MIN, STAR_BOARD_REACTION } from '../util/constants'
-import { Guild, Message, PartialMessage, TextChannel } from 'discord.js'
-import { LogBulkMessageDelete, LogMessageEdit } from '../renderers/guildLogs/msg'
+import { onEvent } from '../../client/handlers/event'
+import { getStarboardMessage } from '../../database/starboard'
+import { getGuildLogs, getStarboardChannel } from '../../util/helpers'
+import { StarboardMessage } from '../../renderers/starboard/message'
+import { STAR_BOARD_MIN, STAR_BOARD_REACTION, ID_REGEX } from '../../util/constants'
+import { Guild, Message, PartialMessage, TextChannel, GuildMember } from 'discord.js'
+import { LogBulkMessageDelete, LogMessageEdit } from '../../renderers/guildLogs/msg'
+import { checkGuildLogOption } from '../../database/config'
 
 export default onEvent('messageUpdate', async (oldMsg, newMsg) => {
   if (newMsg.partial) await newMsg.fetch()
@@ -19,7 +20,12 @@ export default onEvent('messageUpdate', async (oldMsg, newMsg) => {
 
   const logs = await getGuildLogs(newMsg.guild)
 
-  if (logs && oldMsg.content && newMsg.content) {
+  if (
+    logs &&
+    oldMsg.content &&
+    newMsg.content &&
+    (await checkGuildLogOption(newMsg.guild.id, 'msgs'))
+  ) {
     logs.send(new LogMessageEdit(oldMsg, newMsg))
   }
 })

@@ -7,12 +7,12 @@ import {
   NewsChannel,
 } from 'discord.js'
 
-import { onEvent } from '../client/handlers/event'
-import { getReactionRole, removeReactionRole } from '../database/reactionRoles'
-import { STAR_BOARD_REACTION, STAR_BOARD_MIN } from '../util/constants'
-import { getStarboardChannel } from '../util/helpers'
-import { StarboardMessage } from '../renderers/starboard/message'
-import { getStarboardMessage, setStarboardMessage } from '../database/starboard'
+import { onEvent } from '../../client/handlers/event'
+import { getReactionRole, removeReactionRole } from '../../database/reactionRoles'
+import { STAR_BOARD_REACTION, STAR_BOARD_MIN } from '../../util/constants'
+import { getStarboardChannel } from '../../util/helpers'
+import { StarboardMessage } from '../../renderers/starboard/message'
+import { getStarboardMessage, setStarboardMessage } from '../../database/starboard'
 
 export default onEvent('messageReactionAdd', async (reaction, user) => {
   if (reaction.partial) await reaction.fetch()

@@ -65,6 +65,10 @@ export async function getGuildLogsOptions(id: string): Promise<LogOptions> {
   return (await guilds.get(`${id}.logOpts`)) || DEFAULT_LOGS_OPTS
 }
 
+export async function checkGuildLogOption(id: string, opt: LogOptsKeys) {
+  return (await getGuildLogsOptions(id))[opt] || DEFAULT_LOGS_OPTS[opt]
+}
+
 export async function updateLogOptions(
   id: string,
   optKey: LogOptsKeys,

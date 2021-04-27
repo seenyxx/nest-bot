@@ -19,6 +19,13 @@ export async function loadCommands(path?: string) {
       ).default
 
       if (module) {
+        loaderLogString(`︱💬︱CMD︱ -> Loading command file ${fileOrDir}`)
+        if (!module.opts.triggers || !module.opts) {
+          throw new Error(
+            `No trigger found for file ${rootPath}/${path}/${fileOrDir}`
+          )
+        }
+
         module.opts.triggers.forEach(trigger => {
           if (!botCache.commands.get(trigger)) {
             loaderLogString(
@@ -39,7 +46,7 @@ export async function loadEvents(client: BotClient, path?: string) {
     const ext = fileOrDir.split('.')[1]
 
     if (!ext) {
-      loadCommands(`${path}/${fileOrDir}`)
+      loadEvents(client, `${path}/${fileOrDir}`)
     } else if (ext === 'js') {
       const module: CustomBotEvent<any> | undefined = (
         await import(`${rootPath}/${path}/${fileOrDir}`)

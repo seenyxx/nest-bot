@@ -1,9 +1,10 @@
 import { Message, PartialMessage } from 'discord.js'
 
-import { onEvent } from '../client/handlers/event'
-import { getStarboardMessage } from '../database/starboard'
-import { LogMessageDelete } from '../renderers/guildLogs/msg'
-import { getGuildLogs, getStarboardChannel } from '../util/helpers'
+import { onEvent } from '../../client/handlers/event'
+import { checkGuildLogOption } from '../../database/config'
+import { getStarboardMessage } from '../../database/starboard'
+import { LogMessageDelete } from '../../renderers/guildLogs/msg'
+import { getGuildLogs, getStarboardChannel } from '../../util/helpers'
 
 export default onEvent('messageDelete', async msg => {
   if (!msg.guild) return
@@ -13,7 +14,7 @@ export default onEvent('messageDelete', async msg => {
 
   const logs = await getGuildLogs(msg.guild)
 
-  if (logs) {
+  if (logs && (await checkGuildLogOption(msg.guild.id, 'msgs'))) {
     logs.send(new LogMessageDelete(msg))
   }
 })
