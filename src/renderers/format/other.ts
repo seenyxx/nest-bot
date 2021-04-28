@@ -21,3 +21,15 @@ export function padTextToLength(str: string, len: number, begin?: boolean) {
   }
   return str.concat(extraCharacters)
 }
+
+export function formatBooleanObject(obj: Record<string, boolean>) {
+  let str = ''
+
+  for (const key in obj) {
+    const val = obj[key]
+
+    str = str.concat(`${key}: ${val ? '\`🟢\`' : '\`🔴\`'}`)
+  }
+  
+  return str
+}
