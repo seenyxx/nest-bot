@@ -4,7 +4,7 @@ import { THEME_COLORS } from '../../util/constants'
 import { formatBooleanObject } from '../format/other'
 import { compareBooleanObjects } from '../../util/helpers'
 
-export class RoleCreateLog extends MessageEmbed {
+export class LogRoleCreate extends MessageEmbed {
   constructor(role: Role) {
     super()
     this.setColor(THEME_COLORS.info)
@@ -13,12 +13,20 @@ export class RoleCreateLog extends MessageEmbed {
   }
 }
 
-export class RoleUpdateLog extends MessageEmbed {
-  constructor(author: GuildMember, oldRole: Role, newRole: Role) {
+export class LogRoleUpdate extends MessageEmbed {
+  constructor(oldRole: Role, newRole: Role) {
     super()
     this.setColor(THEME_COLORS.info)
-    this.setAuthor(author.user.tag, author.user.displayAvatarURL())
     this.setTitle('Role updated')
     this.setDescription(formatBooleanObject(compareBooleanObjects(oldRole.permissions.serialize(), newRole.permissions.serialize())))
+  }
+}
+
+export class LogRoleDelete extends MessageEmbed {
+  constructor(role: Role) {
+    super()
+    this.setColor(THEME_COLORS.error)
+    this.setTitle('Role deleted')
+    this.setDescription(role.name)
   }
 }
