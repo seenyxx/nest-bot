@@ -21,18 +21,23 @@ export class LogRoleUpdate extends MessageEmbed {
     this.setDescription(
       `
       ${
+        oldRole.name !== newRole.name
+          ? `Name: \`${oldRole.name}\` ➡ \`${newRole.name}\`\n`
+          : ''
+      }
+      ${
         oldRole.position !== newRole.position
           ? `Position: ${oldRole.position} ➡ ${newRole.position}\n`
           : ''
       }
       ${
-        oldRole.name !== newRole.name
-          ? `Name: ${oldRole.name} ➡ ${newRole.name}\n`
+        oldRole.hoist !== newRole.hoist
+          ? `Host: ${oldRole.hoist} ➡ ${newRole.hoist}\n`
           : ''
       }
       ${
-        oldRole.hoist !== newRole.hoist
-          ? `Host: ${oldRole.hoist} ➡ ${newRole.hoist}\n`
+        oldRole.mentionable !== newRole.mentionable
+          ? `Mentionable: ${oldRole.mentionable} ➡ ${newRole.mentionable}\n`
           : ''
       }
       ${
@@ -42,12 +47,16 @@ export class LogRoleUpdate extends MessageEmbed {
       }
 
       Permission Changes:
-      ${formatBooleanObject(
-        compareBooleanObjects(
-          oldRole.permissions.serialize(),
-          newRole.permissions.serialize()
-        )
-      )}`
+      ${
+        oldRole.permissions !== newRole.permissions
+          ? formatBooleanObject(
+              compareBooleanObjects(
+                oldRole.permissions.serialize(),
+                newRole.permissions.serialize()
+              )
+            )
+          : ''
+      }`
     )
   }
 }

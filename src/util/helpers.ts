@@ -139,3 +139,18 @@ export function compareBooleanObjects(
 
   return ret
 }
+
+export function compareObject<V>(
+  oldObj: Record<string, V>,
+  newObj: Record<string, V>
+): Record<string, V> {
+  let ret: Record<string, V> = {}
+
+  for (const key in oldObj) {
+    if (oldObj[key] !== newObj[key]) {
+      ret[key] = newObj[key]
+    }
+  }
+
+  return ret
+}
