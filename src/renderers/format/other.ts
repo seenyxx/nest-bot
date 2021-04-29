@@ -28,8 +28,8 @@ export function formatBooleanObject(obj: Record<string, boolean>) {
   for (const key in obj) {
     const val = obj[key]
 
-    str = str.concat(`${key}: ${val ? '\`🟢\`' : '\`🔴\`'}`)
+    str = str.concat(`${key}: ${val ? '`🟢`' : '`🔴`'}`)
   }
-  
+
   return str
 }

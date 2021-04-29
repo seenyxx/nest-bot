@@ -7,7 +7,7 @@ import { compareBooleanObjects } from '../../util/helpers'
 export class LogRoleCreate extends MessageEmbed {
   constructor(role: Role) {
     super()
-    this.setColor(THEME_COLORS.info)
+    this.setColor(THEME_COLORS.success)
     this.setTitle('Role created')
     this.setDescription(`\`${role.name} ${mentionRole(role.id)}\``)
   }
@@ -18,7 +18,37 @@ export class LogRoleUpdate extends MessageEmbed {
     super()
     this.setColor(THEME_COLORS.info)
     this.setTitle('Role updated')
-    this.setDescription(formatBooleanObject(compareBooleanObjects(oldRole.permissions.serialize(), newRole.permissions.serialize())))
+    this.setDescription(
+      `
+      ${
+        oldRole.position !== newRole.position
+          ? `Position: ${oldRole.position} ➡ ${newRole.position}\n`
+          : ''
+      }
+      ${
+        oldRole.name !== newRole.name
+          ? `Name: ${oldRole.name} ➡ ${newRole.name}\n`
+          : ''
+      }
+      ${
+        oldRole.hoist !== newRole.hoist
+          ? `Host: ${oldRole.hoist} ➡ ${newRole.hoist}\n`
+          : ''
+      }
+      ${
+        oldRole.hexColor !== newRole.hexColor
+          ? `Color \`${oldRole.hexColor}\` ➡ \`${newRole.hexColor}\`\n`
+          : ''
+      }
+
+      Permission Changes:
+      ${formatBooleanObject(
+        compareBooleanObjects(
+          oldRole.permissions.serialize(),
+          newRole.permissions.serialize()
+        )
+      )}`
+    )
   }
 }
 

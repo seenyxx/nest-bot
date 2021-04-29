@@ -1,6 +1,6 @@
-import { onEvent } from '../../client/handlers/event';
-import { checkGuildLogOption } from '../../database/config';
-import { getGuildLogs } from '../../util/helpers';
+import { onEvent } from '../../client/handlers/event'
+import { checkGuildLogOption } from '../../database/config'
+import { getGuildLogs } from '../../util/helpers'
 import { LogRoleCreate } from '../../renderers/guildLogs/roles'
 
 export default onEvent('roleCreate', async role => {

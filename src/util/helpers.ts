@@ -126,7 +126,10 @@ export async function getGuildLogs(guild: Guild) {
   return wh
 }
 
-export function compareBooleanObjects(oldObj: Record<string, boolean>, newObj: Record<string, boolean>) {
+export function compareBooleanObjects(
+  oldObj: Record<string, boolean>,
+  newObj: Record<string, boolean>
+) {
   let ret: Record<string, boolean> = {}
   for (const key in oldObj) {
     if (oldObj[key] !== newObj[key]) {
