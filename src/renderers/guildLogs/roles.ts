@@ -9,7 +9,7 @@ export class LogRoleCreate extends MessageEmbed {
     super()
     this.setColor(THEME_COLORS.success)
     this.setTitle('Role created')
-    this.setDescription(`\`${role.name} ${mentionRole(role.id)}\``)
+    this.setDescription(`\`${role.name} ${mentionRole(role.id)}\` | ${role.id}`)
   }
 }
 
@@ -17,6 +17,7 @@ export class LogRoleUpdate extends MessageEmbed {
   constructor(oldRole: Role, newRole: Role) {
     super()
     this.setColor(THEME_COLORS.info)
+    this.setAuthor(`\`${newRole.name}\` | ${newRole.id}`)
     this.setTitle('Role updated')
     this.setDescription(
       `
@@ -66,6 +67,6 @@ export class LogRoleDelete extends MessageEmbed {
     super()
     this.setColor(THEME_COLORS.error)
     this.setTitle('Role deleted')
-    this.setDescription(role.name)
+    this.setDescription(`${role.name} | ${role.id}`)
   }
 }

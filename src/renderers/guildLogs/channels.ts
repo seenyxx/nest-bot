@@ -14,7 +14,7 @@ export class LogChannelCreate extends MessageEmbed {
     super()
     this.setColor(THEME_COLORS.success)
     this.setTitle('Channel created')
-    this.setDescription(`\`${c.name}\`\nType: ${c.type}`)
+    this.setDescription(`\`${c.name}\`\nType: ${c.type} | ${c.id}`)
   }
 }
 
@@ -22,6 +22,7 @@ export class LogChannelUpdate extends MessageEmbed {
   constructor(oldC: GuildChannel, newC: GuildChannel) {
     super()
     this.setColor(THEME_COLORS.info)
+    this.setAuthor(`\`${newC.name}\` | ${newC.id}`)
     this.setTitle('Updated Channel')
     this.setDescription(`
       ${oldC.name !== newC.name ? `Name: \`${oldC.name}\` ➡ \`${newC.name}\`\n` : ''}
@@ -70,4 +71,13 @@ function mapRecord(
   }
 
   return str
+}
+
+export class LogChannelDelete extends MessageEmbed {
+  constructor(c: GuildChannel) {
+    super()
+    this.setColor(THEME_COLORS.error)
+    this.setTitle('Deleted channel')
+    this.setDescription(`${c.name} | ${c.id}`)
+  }
 }
